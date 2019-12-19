@@ -88,6 +88,29 @@ def show(path_org,path = './result/result.avi',key = 0):
             videoWriter.write(img[0])
             print(img[1])
         videoWriter.release()
+
+def show3(filename):
+    cap = cv2.VideoCapture(filename)
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        # if frame is read correctly ret is True
+        if not ret:
+            print("Can't receive frame (stream end?). Exiting ...")
+            break
+        # show gray picture
+        # gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        # cv.imshow('frame', gray)
+        cv2.imshow('frame', frame)
+        for i in range(1, 1000000):
+            pass
+
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+
+
 def draw_rec(frame,contours):
     res = frame
     for c in contours:

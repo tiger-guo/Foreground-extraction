@@ -53,7 +53,12 @@ def run():
     var1 = tk.IntVar()
 
     def open3():
-        seg.capture('aa.avi', key)
+        Popen('matlab -nosplash -nodesktop -r Untitled')
+
+    def open4():
+        global key
+        filename = askopenfilename(initialdir='E:/Python/MATLAB_code-master/Robot vision/Project/result')
+        seg.show3(filename)
 
     def change_key():
         global key
@@ -82,8 +87,10 @@ def run():
     btn_quit.place(x=140, y=80, anchor=NW)
     btn_quit = tk.Button(root, text='多角度提取', command=open3)
     btn_quit.place(x=220, y=80, anchor=NW)
+    btn_quit = tk.Button(root, text='显示视频', command=open4)
+    btn_quit.place(x=220, y=120, anchor=NW)
     check_btn_key = tk.Checkbutton(root, variable=var1, text="显示关键帧", onvalue=1, offvalue=0, command=change_key)
-    check_btn_key.place(x=120, y=120, anchor=NW)
+    check_btn_key.place(x=120, y=140, anchor=NW)
     # # 创建菜单栏
     # menubar = Menu(root)
     # root.config(menu=menubar)

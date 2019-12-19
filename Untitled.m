@@ -1,8 +1,7 @@
-function [void] = Untitled(index)
-source1 = VideoReader('campus4-c0.mp4');
-source2 = VideoReader('campus4-c1.mp4');
-source3 = VideoReader('terrace1-c0.mp4');
-source4 = VideoReader('terrace1-c1.mp4');
+source1 = VideoReader('SIFT/campus4-c0.mp4');
+source2 = VideoReader('SIFT/campus4-c1.mp4');
+source3 = VideoReader('SIFT/terrace1-c0.mp4');
+source4 = VideoReader('SIFT/terrace1-c1.mp4');
 nFrames1 = source1.NumberOfFrames;
 nFrames2 = source2.NumberOfFrames;
 nFrames3 = source3.NumberOfFrames;
@@ -18,7 +17,7 @@ bFirst2=1;
 bFirst3=1;
 bFirst4=1;
 
-for i = index:1700
+for i = 500:1000
     a1 = double(rgb2gray(read(source1,i))); % read in frame
     a2 = double(rgb2gray(read(source2,i)));
     a3 = double(rgb2gray(read(source3,i))); % read in frame
@@ -31,7 +30,7 @@ for i = index:1700
     det1(det1>=theld)=1;
      se1=strel('diamond', 10);
     det1=imdilate(det1,se1); %图像膨胀
-    det1=bwareaopen(det1,1000);%去除图像中面积小于 500 的区域
+    det1=bwareaopen(det1,1000);%去除图像中面积小�? 500 的区�?
     det2(det2<theld)=0;
     det2(det2>=theld)=1;
     sel2=strel('diamond', 10);
@@ -41,14 +40,14 @@ for i = index:1700
     det3(det3>=theld)=1;
     se3=strel('diamond', 10);
     det3=imdilate(det3,se3); %图像膨胀
-    det3=bwareaopen(det3,1000);%去除图像中面积小于 500 的区域
+    det3=bwareaopen(det3,1000);%去除图像中面积小�? 500 的区�?
     det4(det4<theld)=0;
     det4(det4>=theld)=1;
     se4=strel('diamond', 10);
     det4=imdilate(det4,se4); %图像膨胀
-    det4=bwareaopen(det4,1000);%去除图像中面积小于 500 的区域
-    % % % det2= imfill(det2,'holes');%将原图填充孔洞
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 目 标 分割%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    det4=bwareaopen(det4,1000);%去除图像中面积小�? 500 的区�?
+    % % % det2= imfill(det2,'holes');%将原图填充孔�?
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% �? �? 分割%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     box1=regionprops(det1,'BoundingBox');
     box2=regionprops(det2,'BoundingBox');
     box3=regionprops(det3,'BoundingBox');
@@ -129,8 +128,14 @@ for i = index:1700
     else
             boxOld4=box4;
     end
-
-    gca = figure(index)
+    
+    figure1 = figure(1); 
+    subplot(221),imshow(det1); 
+    subplot(222),imshow(det2); 
+    subplot(223),imshow(det3); 
+    subplot(224),imshow(det4);
+    
+    figure2 = figure(2);
     subplot(221),imshow(uint8(a1));
     hold on
     for j=1:length(boxOld1)
@@ -159,10 +164,6 @@ for i = index:1700
         text(boxOld4(j).BoundingBox(1)+boxOld4(j).BoundingBox(3)/2-10,boxOld4(j).BoundingBox(2)+boxOld4(j).BoundingBox(4)/2,num2str(j),'FontSize',16,'FontWeight','Bold','Color',clors(j));
     end
     hold off
-    index = num2str(index)
-    name = strcat(index,'.png')
-    fileName = strcat('E:/img/',name);
-    f=getframe(gca);
-    imwrite(f.cdata,fileName);
+
 end
 clear;
