@@ -53,7 +53,7 @@ def run():
     var1 = tk.IntVar()
 
     def open3():
-        Popen('matlab -nosplash -nodesktop -r Untitled')
+        seg.capture('aa.avi', key)
 
     def change_key():
         global key
